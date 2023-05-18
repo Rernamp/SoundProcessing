@@ -1,0 +1,9 @@
+[submodule "Dependencies/CMSIS-DSP"]
+	path = Dependencies/CMSIS-DSP
+	url = https://github.com/ARM-software/CMSIS-DSP.git
+[submodule "Dependencies/AudioFile"]
+	path = Dependencies/AudioFile
+	url = https://github.com/adamstark/AudioFile.git
+[submodule "Dependencies/pocketfft"]
+	path = Dependencies/pocketfft
+	url = https://github.com/hayguen/pocketfft.git
