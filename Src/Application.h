@@ -67,7 +67,7 @@ namespace UDA {
 
 				kfr::complex<float> shiftValue = 0.0f;
 				for (std::size_t j = 2 * i * nOne; i < (1 + nOne + i * nOne); i++) {
-					shiftValue = inputSpectr[j] * kfr::exp(- complex<float>(0, -1) * 2 * kfr::c_pi<float> * fTau * tauShift * fs / inputSpectr.size());
+					shiftValue = inputSpectr[j] * kfr::exp(- complex<float>(0, -1) * 2 * kfr::constants<float>::pi * fTau * tauShift * fs / inputSpectr.size());
 					result.push_back(shiftValue);
 				}
 			}
