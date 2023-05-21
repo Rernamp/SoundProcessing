@@ -4,6 +4,6 @@
 [submodule "Dependencies/AudioFile"]
 	path = Dependencies/AudioFile
 	url = https://github.com/adamstark/AudioFile.git
-[submodule "Dependencies/pocketfft"]
-	path = Dependencies/pocketfft
-	url = https://github.com/hayguen/pocketfft.git
+[submodule "Dependencies/kfr"]
+	path = Dependencies/kfr
+	url = https://github.com/kfrlib/kfr.git

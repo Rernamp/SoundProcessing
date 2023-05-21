@@ -4,6 +4,7 @@
 
 #include "AudioFile.h"
 
+#include <kfr/all.hpp>
 
 namespace UDA {
 	class Application {
@@ -31,9 +32,30 @@ namespace UDA {
 	private:
 
 		void generateRecivedSignal(AudioFileType::AudioBuffer& resultsBuffer) {
+			using namespace kfr;
 
+			univector<complex<float>> fftNoise = fft(_noiseSignal);
 		}
+
+		kfr::univector<kfr::complex<float>> fft(const AudioFileType::AudioBuffer& buffer) {
+			using namespace kfr;
+			univector<complex<float>> signal;
+
+			for (const auto& element : buffer[0]) {
+				signal.push_back(element);
+			}
+
+			return dft(signal);
+		}
+
+		kfr::univector<kfr::complex<float>> shiftSpectr(kfr::univector<kfr::complex<float>> inputSpect, float tauShift) {
+			using namespace kfr;
+
+			univector<complex<float>> result = inputSpect;
+		}
+
 		const std::size_t _numberElements = 4;
+		const float soundSpeed = 330.0f;
 		const float _distanceBetweenElement = 0.1f;
 		const float _angleOfArrivalNoise = 60;
 
