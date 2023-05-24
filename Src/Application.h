@@ -29,30 +29,34 @@ namespace UDA {
 				}
 			};
 
+			_fs = _audioWav.getSampleRate();
+
+			sizeOfFiles = _fs * 2;
+
 			delUnusedBuffer(_inputSignal[0], sizeOfFiles);
 			delUnusedBuffer(_noiseSignal[0], sizeOfFiles);
 			
-			_fs = _audioWav.getSampleRate();
+			
 		}
 
 		void run() {
-			kfr::univector<kfr::univector<kfr::complex<float>>> _inputRecivedBuffer {_numberElements};
+			AudioFileType::AudioBuffer _inputRecivedBuffer {_numberElements};
 
 			generateRecivedSignal(_inputRecivedBuffer);
 
 		}
 	private:
 
-		void generateRecivedSignal(kfr::univector<kfr::univector<kfr::complex<float>>>& resultsBuffer) {
+		void generateRecivedSignal(AudioFileType::AudioBuffer& resultsBuffer) {
 			using namespace kfr;
 
 			univector<complex<float>> fftNoise = fft(_noiseSignal);
 
-			float tauByOneElement = (_distanceBetweenElement*sind(_angleOfArrivalNoise))/(_soundSpeed);
+			float tauByOneElement = (_distanceBetweenElement*std::sin(_angleOfArrivalNoise))/(_soundSpeed);
 			for (std::size_t i = 0; i < resultsBuffer.size(); i++) {
 				resultsBuffer[i] = shiftSpectr(fftNoise, tauByOneElement * i, _fs);
 			}
-			
+
 		}
 
 		kfr::univector<kfr::complex<float>> fft(const AudioFileType::AudioBuffer& buffer) {
@@ -66,9 +70,18 @@ namespace UDA {
 			return dft(signal);
 		}
 
-		kfr::univector<kfr::complex<float>> shiftSpectr(kfr::univector<kfr::complex<float>> inputSpectr, float tauShift, float fs) {
+		std::vector<float> ifft(kfr::univector<kfr::complex<float>> buffer) {
 			using namespace kfr;
-			univector<complex<float>> result {};
+			auto ifft = idft(buffer);
+
+			std::vector<float> result {};
+
+			return result;
+		}
+
+		std::vector<float> shiftSpectr(kfr::univector<kfr::complex<float>> inputSpectr, float tauShift, float fs) {
+			using namespace kfr;
+			univector<complex<float >> result {};
 			inputSpectr[0] = 0;
 
 			auto nOne = 1;
@@ -78,7 +91,7 @@ namespace UDA {
 				auto fTau = ((2 + 2 + nOne - 1)/2) + i*nOne;
 
 				kfr::complex<float> shiftValue = 0.0f;
-				for (std::size_t j = 2 * i * nOne; j < (1 + nOne + i * nOne); j++) {
+				for (std::size_t j = 2  + i * nOne; j <= (1 + nOne + i * nOne); j++) {
 					shiftValue = inputSpectr[j] * kfr::cexp(- complex<float>(0, -1) * 2 * kfr::constants<float>::pi * fTau * tauShift * fs / inputSpectr.size());
 					result.push_back(shiftValue);
 				}
@@ -90,7 +103,7 @@ namespace UDA {
 			if (inputSpectr.size() % 2 == 0) {
 				result.back() = result.back().real();
 				
-				for (std::size_t i = sizeBuffer - 1; i > 0; i--) {
+				for (std::size_t i = sizeBuffer - 2; i > 0; i--) {
 					rightPart.push_back(cconj(result[i]));
 				}
 			}
@@ -103,8 +116,10 @@ namespace UDA {
 			result.insert(result.begin(), inputSpectr[0]);
 			result.insert(result.end(), rightPart.begin(), rightPart.end());
 
+			std::vector<float> _result = ifft(result);
 
-			return result;
+
+			return _result;
 		}
 
 		const std::size_t _numberElements = 4;
