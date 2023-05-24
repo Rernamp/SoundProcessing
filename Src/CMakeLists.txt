@@ -8,3 +8,5 @@ target_sources(CommonAplication INTERFACE
     Application.h
     main.cpp
 )
+
+add_subdirectory(Filters)

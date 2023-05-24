@@ -9,7 +9,7 @@
             "type": "cppvsdbg",
             "request": "launch",
             "program": "${workspaceFolder}/build/Debug/cmsis_test.exe",
-            "args": ["${workspaceFolder}/sound.wav", "${workspaceFolder}/noise.wav", "${workspaceFolder}/outputSignal.wav"],
+            "args": ["${workspaceFolder}/test.wav", "${workspaceFolder}/outputSignal.wav"],
             // "externalConsole": true,
             "logging": {
               "moduleLoad": false,
