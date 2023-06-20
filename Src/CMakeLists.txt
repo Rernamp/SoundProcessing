@@ -10,3 +10,4 @@ target_sources(CommonAplication INTERFACE
 )
 
 add_subdirectory(Filters)
+add_subdirectory(config)

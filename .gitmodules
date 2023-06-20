@@ -7,3 +7,9 @@
 [submodule "Dependencies/kfr"]
 	path = Dependencies/kfr
 	url = https://github.com/kfrlib/kfr.git
+[submodule "Dependencies/Math"]
+	path = Dependencies/Math
+	url = https://github.com/Rernamp/Math.git
+[submodule "Dependencies/LFramework"]
+	path = Dependencies/LFramework
+	url = https://github.com/L-proger/LFramework.git
