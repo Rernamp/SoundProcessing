@@ -4,9 +4,6 @@
 [submodule "Dependencies/AudioFile"]
 	path = Dependencies/AudioFile
 	url = https://github.com/adamstark/AudioFile.git
-[submodule "Dependencies/kfr"]
-	path = Dependencies/kfr
-	url = https://github.com/kfrlib/kfr.git
 [submodule "Dependencies/Math"]
 	path = Dependencies/Math
 	url = https://github.com/Rernamp/Math.git
